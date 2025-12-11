@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-01-01',
-  devtools: { enabled: true },
+  // 禁用 devtools 以避免 oxc-parser 原生绑定问题（Cloudflare Pages 构建环境不支持）
+  devtools: { enabled: false },
   modules: ['@nuxtjs/tailwindcss'],
   css: ['~/assets/css/main.css'],
   app: {
@@ -15,5 +16,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'cloudflare-pages'
+  },
+  // 优化构建配置
+  experimental: {
+    payloadExtraction: false
   }
 })

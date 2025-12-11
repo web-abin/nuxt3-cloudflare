@@ -44,7 +44,7 @@ npm run preview
    - 连接到你的 Git 仓库
 3. 构建配置：
    - **构建命令**: `npm run build`
-   - **构建输出目录**: `.output/public`
+   - **构建输出目录**: `dist`（Cloudflare Pages preset 的输出目录）
    - **Node 版本**: 18 或更高
    - **包管理器**: npm（重要：确保使用 npm 而不是 yarn）
    - **环境变量**: 根据需要添加
@@ -65,7 +65,7 @@ wrangler login
 
 # 部署到 Cloudflare Pages
 npm run build
-wrangler pages deploy .output/public
+wrangler pages deploy dist
 ```
 
 项目已配置为使用 `cloudflare-pages` preset，会自动处理 Workers 集成。所有 Server API 路由将自动部署为 Cloudflare Workers。
@@ -80,6 +80,19 @@ wrangler pages deploy .output/public
 2. **提交 lockfile**：确保 `package-lock.json` 已提交到 Git
 3. **删除 yarn.lock**：如果存在 `yarn.lock`，可以删除它以避免冲突
 4. **重新生成 lockfile**：本地运行 `npm install` 生成最新的 `package-lock.json`
+
+### 部署失败：oxc-parser 原生绑定错误
+
+如果遇到 `Cannot find native binding` 或 `oxc-parser` 相关错误：
+
+1. **已修复**：项目已移除 `@nuxt/devtools` 依赖，避免原生绑定问题
+2. **已移除 postinstall 脚本**：`nuxt prepare` 会在构建时自动执行，无需 postinstall
+3. **devtools 已禁用**：在 `nuxt.config.ts` 中 devtools 已设置为 `enabled: false`
+
+如果仍然遇到问题，确保：
+- 使用 Node.js 18 或更高版本
+- 构建命令设置为 `npm run build`
+- 环境变量 `NODE_ENV=production` 已设置（构建脚本中已包含）
 
 ## API 路由
 
