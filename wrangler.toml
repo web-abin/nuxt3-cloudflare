@@ -1,0 +1,9 @@
+name = "nuxt3-portfolio"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = ".output/public"
+
+[env.production]
+name = "nuxt3-portfolio-prod"
+
+[env.preview]
+name = "nuxt3-portfolio-preview"
