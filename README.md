@@ -21,7 +21,7 @@
 ## 开发
 
 ```bash
-# 安装依赖
+# 安装依赖（使用 npm）
 npm install
 
 # 启动开发服务器
@@ -38,7 +38,7 @@ npm run preview
 
 ### 方法 1: 通过 Cloudflare Dashboard
 
-1. 将代码推送到 GitHub/GitLab
+1. 将代码推送到 GitHub/GitLab（**确保提交 `package-lock.json` 文件**）
 2. 在 [Cloudflare Dashboard](https://dash.cloudflare.com) 中：
    - 进入 **Pages** → **Create a project**
    - 连接到你的 Git 仓库
@@ -46,7 +46,13 @@ npm run preview
    - **构建命令**: `npm run build`
    - **构建输出目录**: `.output/public`
    - **Node 版本**: 18 或更高
+   - **包管理器**: npm（重要：确保使用 npm 而不是 yarn）
    - **环境变量**: 根据需要添加
+
+**重要提示**：
+- 如果 Cloudflare Pages 自动检测到 yarn，请在构建设置中**明确指定使用 npm**
+- 确保 `package-lock.json` 文件已提交到 Git 仓库
+- 如果存在 `yarn.lock`，可以删除它或确保 Cloudflare Pages 配置使用 npm
 
 ### 方法 2: 使用 Wrangler CLI
 
@@ -63,6 +69,17 @@ wrangler pages deploy .output/public
 ```
 
 项目已配置为使用 `cloudflare-pages` preset，会自动处理 Workers 集成。所有 Server API 路由将自动部署为 Cloudflare Workers。
+
+## 故障排除
+
+### 部署失败：lockfile 修改错误
+
+如果遇到 `The lockfile would have been modified by this install` 错误：
+
+1. **确保使用 npm**：在 Cloudflare Pages 设置中明确指定包管理器为 `npm`
+2. **提交 lockfile**：确保 `package-lock.json` 已提交到 Git
+3. **删除 yarn.lock**：如果存在 `yarn.lock`，可以删除它以避免冲突
+4. **重新生成 lockfile**：本地运行 `npm install` 生成最新的 `package-lock.json`
 
 ## API 路由
 
