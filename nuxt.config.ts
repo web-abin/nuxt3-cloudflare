@@ -15,7 +15,17 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: 'cloudflare-pages'
+    preset: 'cloudflare-pages',
+    // 禁用 minify 以避免 oxc-parser 原生绑定问题
+    minify: false
+  },
+  vite: {
+    // 使用 esbuild 而不是 oxc 进行压缩
+    esbuild: {
+      minifyIdentifiers: false,
+      minifySyntax: true,
+      minifyWhitespace: true
+    }
   },
   // 优化构建配置
   experimental: {

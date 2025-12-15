@@ -86,15 +86,21 @@ wrangler pages deploy dist
 
 如果遇到 `Cannot find native binding` 或 `oxc-parser` 相关错误：
 
-1. **已修复**：项目已移除 `@nuxt/devtools` 依赖，避免原生绑定问题
-2. **已移除 postinstall 脚本**：`nuxt prepare` 会在构建时自动执行，无需 postinstall
-3. **devtools 已禁用**：在 `nuxt.config.ts` 中 devtools 已设置为 `enabled: false`
+1. **已修复**：
+   - 锁定 Nuxt 版本为 `3.12.0`（不使用 `^` 前缀），避免安装依赖 `oxc-parser` 的新版本
+   - 移除 `@nuxt/devtools` 依赖
+   - 禁用 devtools
+   - 配置 Nitro 不使用 minify（避免 oxc-parser）
+   - 使用 esbuild 进行压缩
+
+2. **版本锁定**：`package.json` 中使用精确版本 `"nuxt": "3.12.0"` 而不是 `"^3.12.0"`
 
 如果仍然遇到问题，确保：
 - 使用 Node.js 20 或更高版本（项目已配置）
 - 构建命令设置为 `npm run build`
 - 环境变量 `NODE_ENV=production` 已设置（构建脚本中已包含）
 - 在 Cloudflare Pages 设置中明确指定 Node.js 版本为 20
+- **重要**：确保 `package-lock.json` 已提交，锁定 Nuxt 3.12.0 版本
 
 ### 部署失败：Node.js 版本不匹配
 
