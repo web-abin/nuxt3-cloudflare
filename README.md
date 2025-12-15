@@ -84,23 +84,39 @@ wrangler pages deploy dist
 
 ### 部署失败：oxc-parser 原生绑定错误
 
-如果遇到 `Cannot find native binding` 或 `oxc-parser` 相关错误：
+如果遇到 `Cannot find native binding` 或 `oxc-parser` 相关错误，或看到 `Nuxt 3.20.2` 被安装：
 
 1. **已修复**：
-   - 锁定 Nuxt 版本为 `3.12.0`（不使用 `^` 前缀），避免安装依赖 `oxc-parser` 的新版本
+   - 锁定 Nuxt 版本为 `3.12.0`（不使用 `^` 前缀）
+   - 使用 `overrides` 强制锁定 Nuxt 版本
    - 移除 `@nuxt/devtools` 依赖
    - 禁用 devtools
    - 配置 Nitro 不使用 minify（避免 oxc-parser）
    - 使用 esbuild 进行压缩
 
-2. **版本锁定**：`package.json` 中使用精确版本 `"nuxt": "3.12.0"` 而不是 `"^3.12.0"`
+2. **版本锁定**：
+   - `package.json` 中使用精确版本 `"nuxt": "3.12.0"` 而不是 `"^3.12.0"`
+   - 添加 `overrides` 字段强制锁定版本
+
+3. **清除 Cloudflare Pages 缓存**：
+   - 在 Cloudflare Pages Dashboard 中：
+     - 进入项目设置 → **Builds & deployments**
+     - 点击 **Clear build cache** 清除构建缓存
+     - 或者删除并重新创建项目
+
+4. **确保提交 package-lock.json**：
+   ```bash
+   git add package-lock.json
+   git commit -m "fix: 锁定 Nuxt 3.12.0 版本"
+   git push
+   ```
 
 如果仍然遇到问题，确保：
 - 使用 Node.js 20 或更高版本（项目已配置）
 - 构建命令设置为 `npm run build`
 - 环境变量 `NODE_ENV=production` 已设置（构建脚本中已包含）
 - 在 Cloudflare Pages 设置中明确指定 Node.js 版本为 20
-- **重要**：确保 `package-lock.json` 已提交，锁定 Nuxt 3.12.0 版本
+- **重要**：确保 `package-lock.json` 已提交到 Git，并清除 Cloudflare Pages 的构建缓存
 
 ### 部署失败：Node.js 版本不匹配
 
@@ -114,10 +130,21 @@ wrangler pages deploy dist
 
 如果 Cloudflare Pages 尝试使用 `yarn run build`：
 
-1. **删除 yarn.lock**：确保项目中不存在 `yarn.lock` 文件
+1. **删除所有 yarn 相关文件**：
+   - 删除 `yarn.lock` 文件（如果存在）
+   - 删除 `.yarnrc.yml` 文件（如果存在）
+   - 删除 `.yarnrc` 文件（如果存在）
+   - 删除 `.yarn/` 目录（如果存在）
+
 2. **提交 package-lock.json**：确保 `package-lock.json` 已提交到 Git
+
 3. **明确指定 npm**：在 Cloudflare Pages 设置中明确指定包管理器为 `npm`
-4. **package.json packageManager**：项目已配置 `packageManager: "npm@10.0.0"`
+
+4. **package.json 配置**：
+   - 项目已配置 `packageManager: "npm@10.0.0"`
+   - 项目已配置 `engines.npm: ">=10.0.0"`
+
+5. **清除构建缓存**：在 Cloudflare Pages 中清除构建缓存后重新部署
 
 ## API 路由
 
