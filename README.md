@@ -42,12 +42,17 @@ npm run preview
 2. 在 [Cloudflare Dashboard](https://dash.cloudflare.com) 中：
    - 进入 **Pages** → **Create a project**
    - 连接到你的 Git 仓库
-3. 构建配置：
-   - **构建命令**: `npm run build`
+3. 构建配置（⚠️ **重要：必须手动设置，不要使用自动检测**）：
+   - **构建命令**: `npm run build` ⚠️ **必须手动输入，不要使用自动检测的值**
    - **构建输出目录**: `dist`（Cloudflare Pages preset 的输出目录）
    - **Node 版本**: **20**（重要：Nuxt 3.12+ 需要 Node.js 20+）
-   - **包管理器**: npm（重要：确保使用 npm 而不是 yarn）
+   - **包管理器**: **npm** ⚠️ **必须明确选择 npm，不要使用自动检测**
    - **环境变量**: 根据需要添加
+
+**⚠️ 关键步骤**：
+- 在 Cloudflare Pages 设置中，**不要**使用自动检测的构建命令
+- **必须手动输入** `npm run build` 作为构建命令
+- 如果看到自动检测为 `yarn run build`，**必须删除并手动输入** `npm run build`
 
 **重要提示**：
 - **Node.js 版本**：项目需要 Node.js 20 或更高版本（已在 `.nvmrc` 和 `.node-version` 中指定）
