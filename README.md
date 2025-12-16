@@ -37,7 +37,7 @@ npm run preview
 ## 部署到 Cloudflare Pages
 
 ### 方法 1: 通过 Cloudflare Dashboard
-
+ 
 1. 将代码推送到 GitHub/GitLab（**确保提交 `package-lock.json` 文件**）
 2. 在 [Cloudflare Dashboard](https://dash.cloudflare.com) 中：
    - 进入 **Pages** → **Create a project**
