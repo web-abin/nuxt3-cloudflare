@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "sources": ["../../../dist/_worker.js/index.js"],
+  "sourceRoot": "/Users/wangjunbin/a-my-projects/nuxt3-cloundflare/.wrangler/tmp/pages-40wJ43/bundledWorker-0.49737001444205386.mjs",
+  "sourcesContent": ["globalThis._importMeta_={url:\"file:///_entry.js\",env:{}};export { A as default } from './chunks/nitro/nitro.mjs';\n//# sourceMappingURL=index.js.map\n"],
+  "mappings": ";AAAyD,SAAc,SAAe;AAAtF,WAAW,eAAa,EAAC,KAAI,qBAAoB,KAAI,CAAC,EAAC;",
+  "names": []
+}
